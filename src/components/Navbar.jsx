@@ -19,7 +19,7 @@ export const Navbar = () => {
 						alt="Config.teste"
 					/>
 					<span className="self-center text-2xl font-mono-nowrap dark:text-white">
-						Config.teste
+						Config..teste
 					</span>
 				</a>
 				<button
