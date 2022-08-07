@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const Tile = ({ title, visibleStars, description, image, link }) => {
 	return (
-		<div className="max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 border-gray-700">
+		<div className="max-w-sm m-4 bg-white rounded-lg shadow-md dark:bg-gray-800 border-gray-700">
 			<a href="#">
 				<img
 					className="p-8 rounded-t-lg"

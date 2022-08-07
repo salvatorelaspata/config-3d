@@ -2,10 +2,11 @@ import { Tile } from "../components/Tile";
 
 export const Catalog = () => {
 	return (
-		<div className="p-4 flex justify-around">
+		<div className="p-4 flex flex-wrap justify-around">
 			<Tile
 				title="Testa di moro classica. (Femmina)"
 				description="Configurabile! Provalo adesso!"
+				className="m-4"
 			/>
 			<Tile
 				title="Testa di moro classica. (Maschio)"
