@@ -9,11 +9,7 @@ function App() {
 		// 	setRandomBgColorGradient([].concat(color1, color2));
 		// }, 1000);
 	}, []);
-	return (
-		<div className="App">
-			<LandingPage />
-		</div>
-	);
+	return <LandingPage />;
 }
 
 export default App;

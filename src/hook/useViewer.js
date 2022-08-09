@@ -29,12 +29,12 @@ const _initialization = (onFinishedLoading) => {
 		function (obj) {
 			// object = obj;
 			onFinishedLoading(obj);
-			console.log("object", obj);
+			// console.log("object", obj);
 		},
 		(xhr) => {
 			if (xhr.lengthComputable) {
 				const percentComplete = (xhr.loaded / xhr.total) * 100;
-				console.log(Math.round(percentComplete) + "% downloaded");
+				// console.log(Math.round(percentComplete) + "% downloaded");
 			}
 		},
 		(err) => {
@@ -77,9 +77,13 @@ const useViewer = (mount) => {
 
 		const [light, light2, texture] = _initialization(function (obj) {
 			obj.traverse((object) => {
+				// console.log(object);
 				if (object instanceof THREE.Mesh) {
 					object.material.map = texture;
-					actions.addComponent(new Color(0xffffff));
+					object.material.needsUpdate = true;
+					actions.addComponent(object);
+				} else {
+					console.log("Not managed", object);
 				}
 			});
 			obj.position.set(0, -95, 0);
@@ -96,12 +100,11 @@ const useViewer = (mount) => {
 
 		// camera.current.position.z = 2;
 		camera.current.position.set(140, 30, 0);
-		// controls.update();
 
 		//ANIMATE
 		const animate = function () {
 			requestAnimationFrame(animate);
-			if (object.current) object.current.rotation.y -= 0.01;
+			if (object.current) object.current.rotation.y -= 0.006;
 			// required if controls.enableDamping or controls.autoRotate are set to true
 			controls.update();
 			renderer.render(scene.current, camera.current);
@@ -109,23 +112,29 @@ const useViewer = (mount) => {
 		animate();
 	}, [mount]);
 
-	const changeRandomColor = () => {
+	const changeRandomColor = (child) => {
+		console.log("changeRandomColor", child);
 		if (object.current) {
-			object.current.traverse(function (child) {
-				// if (child.isMesh) child.material.map = texture;
-				if (child.isMesh) {
-					var r = Math.round(255 * Math.random());
-					var g = Math.round(255 * Math.random());
-					var b = Math.round(255 * Math.random());
-					var randomColor = "rgb(" + r + ", " + g + ", " + b + ")";
-
-					const currentColor = new THREE.Color(randomColor);
-					child.material = new THREE.MeshLambertMaterial({
-						color: currentColor,
+			object.current.traverse(function (c) {
+				var r = Math.round(255 * Math.random());
+				var g = Math.round(255 * Math.random());
+				var b = Math.round(255 * Math.random());
+				var randomColor = "rgb(" + r + ", " + g + ", " + b + ")";
+				// if (c.isMesh) c.material.map = texture;
+				if (!child && c.isMesh) {
+					c.material = new THREE.MeshLambertMaterial({
+						color: new THREE.Color(randomColor),
 						// wireframe: true,
-						alphaMap: texture.current,
+						// alphaMap: texture.current,
 						// envMap: texture,
 					});
+				} else if (c.isMesh && c.uuid === child.uuid) {
+					c.material = new THREE.MeshLambertMaterial({
+						color: new THREE.Color(randomColor),
+					});
+					// raffinare
+					const { x, y, z } = c.geometry.boundingSphere.center;
+					camera.current.position.set(x - 140, y - 30, z);
 				}
 			});
 		}

@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const LandingPage = () => {
 	const [randomBgColorGradient, setRandomBgColorGradient] = useState([
 		"667eea",
 		"764ba2",
 	]);
+	useEffect(() => {
+		// setInterval(() => {
+		setRandomBgColorGradient([
+			Math.floor(Math.random() * 16777215).toString(16),
+			Math.floor(Math.random() * 16777215).toString(16),
+		]);
+		// }, 1000);
+	}, []);
+
 	return (
 		<>
 			{/* <!--Hero--> */}
@@ -27,7 +36,7 @@ export const LandingPage = () => {
 				</div>
 			</div>
 			{/* <!-- Features --> */}
-			<section className="container mx-auto px-6 p-10">
+			<section className="mx-auto px-6 p-10 bg-gray-100">
 				<h2 className="font-mono text-4xl font-bold text-center text-gray-800 mb-8">
 					Funzionalità
 				</h2>
@@ -53,26 +62,26 @@ export const LandingPage = () => {
 						<img src="hero.png" alt="CONFIGURATORE" />
 					</div>
 					<div className="w-full md:w-1/2 pl-10">
-						<h4 className="text-mono text-3xl text-gray-800 font-bold mb-3">
+						<h4 className="font-mono text-3xl text-gray-800 font-bold mb-3">
 							CONFIGURATORE
 						</h4>
-						<p className="text-mono text-gray-600 mb-8">
+						<p className="font-mono text-gray-600 mb-8">
 							Grazie alle tecnologie 3D applicabili nel web{" "}
-							<span className="text-xl font-bold">Config.teste</span> ti mette a
-							disposizione un configuratore così da poter configurare la tua
-							testa di moro in modo semplice e veloce.
+							<span className="font-mono text-xl font-bold">Config.teste</span>{" "}
+							ti mette a disposizione un configuratore così da poter configurare
+							la tua testa di moro in modo semplice e veloce.
 						</p>
 					</div>
 				</div>
 				<div className="flex items-center flex-wrap mb-20">
 					<div className="w-full md:w-1/2">
-						<h4 className="text-mono text-3xl text-gray-800 font-bold mb-3">
+						<h4 className="font-mono text-3xl text-gray-800 font-bold mb-3">
 							INTEGRAZIONE
 						</h4>
-						<p className="text-mono text-gray-600 mb-8">
+						<p className="font-mono text-gray-600 mb-8">
 							<span className="text-xl font-bold">Config.teste</span> ti
 							permette di ottenere una configurazione di testa di moro completa
-							e personalizzata così da poter ricevere a casa tua con qualche
+							e personalizzata così da poterla ricevere a casa tua con qualche
 							semplice click in base alle tue necessità.
 						</p>
 					</div>
@@ -84,13 +93,13 @@ export const LandingPage = () => {
 			{/* <!--Call to Action--> */}
 			<section style={{ backgroundColor: "#667eea" }}>
 				<div className="container mx-auto px-6 text-center py-20">
-					<h2 className="text-mono mb-6 text-4xl font-bold text-center text-white">
+					<h2 className="font-mono mb-6 text-4xl font-bold text-center text-white">
 						Che stai aspettando?
 					</h2>
-					<h3 className="text-mono my-4 text-2xl text-white">
+					<h3 className="font-mono my-4 text-2xl text-white">
 						Configura subito la tua testa di moro!
 					</h3>
-					<button className="text-mono bg-white font-bold rounded-full mt-6 py-4 px-8 shadow-lg uppercase tracking-wider">
+					<button className="font-mono bg-white font-bold rounded-full mt-6 py-4 px-8 shadow-lg uppercase tracking-wider">
 						Configura subito
 					</button>
 				</div>
@@ -178,7 +187,7 @@ export const LandingPage = () => {
 								</li>
 							</ul>
 						</div>
-						<div className="w-full md:w-1/4 sm:w-1/2 text-center md:text-left ">
+						<div className="w-full md:w-1/4 text-center md:text-left ">
 							<h5 className="uppercase mb-6 font-bold">Company</h5>
 							<ul className="mb-4">
 								<li className="mt-2">

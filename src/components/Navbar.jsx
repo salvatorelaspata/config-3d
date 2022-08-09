@@ -12,8 +12,8 @@ export const Navbar = () => {
 	// manage selected menu item
 	const { pathname } = useLocation();
 	return (
-		<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
-			<div className="container flex flex-wrap justify-between items-center mx-auto">
+		<nav className="bg-white border-gray-200 px-2 sm:px-4 dark:bg-gray-900">
+			<div className="flex flex-wrap justify-between items-center  border-dashed border-b-2 border-b-gray-300">
 				<a href="#" className="flex items-center">
 					<img
 						src="./simple-logo-geometric-polygonal.svg"
@@ -44,7 +44,7 @@ export const Navbar = () => {
 					</svg>
 				</button>
 				<div
-					className={`${!isOpen && "hidden"} w-full md:block md:w-auto`}
+					className={`${!isOpen ? "hidden" : ""} w-full md:block md:w-auto`}
 					id="navbar-default"
 				>
 					<ul className="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-mono md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -76,6 +76,24 @@ export const Navbar = () => {
 							>
 								💡 Configurator
 							</Link>
+						</li>
+						<li>
+							<label
+								htmlFor="default-toggle"
+								className="inline-flex relative items-center mb-4 cursor-pointer"
+							>
+								<input
+									type="checkbox"
+									value=""
+									id="default-toggle"
+									className="sr-only peer"
+									onChange={(oEvn) => {
+										console.log("click");
+										debugger;
+									}}
+								/>
+								<div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+							</label>
 						</li>
 					</ul>
 				</div>
