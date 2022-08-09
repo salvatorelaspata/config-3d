@@ -5,12 +5,11 @@ export const Catalog = () => {
 		<div className="p-4 flex flex-wrap justify-around">
 			<Tile
 				title="Testa di moro classica. (Femmina)"
-				description="Configurabile! Provalo adesso!"
-				className="m-4"
+				description="Provalo adesso!"
 			/>
 			<Tile
 				title="Testa di moro classica. (Maschio)"
-				description="Configurabile! Provalo adesso!"
+				description="Provalo adesso!"
 			/>
 		</div>
 	);
