@@ -134,7 +134,7 @@ const useViewer = (mount) => {
 					});
 					// raffinare
 					const { x, y, z } = c.geometry.boundingSphere.center;
-					camera.current.position.set(x - 140, y - 30, z);
+					// camera.current.position.set(x - 140, y - 30, z);
 				}
 			});
 		}
