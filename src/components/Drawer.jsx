@@ -35,58 +35,63 @@ export const Drawer = ({ components, changeRandomColor }) => {
 			{/* Drawer Content */}
 			<div
 				id="drawer-swipe"
-				className="bg-opacity-80 fixed bottom-14 z-40 w-full overflow-y-auto rounded-lg bg-red-200 border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800"
+				className={`${
+					showWidget ? "visible" : "hidden"
+				} h-72 bg-opacity-80 fixed bottom-14 z-40 w-full overflow-y-auto overflow-x-hidden rounded-lg bg-red-200 border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800`}
 				tabIndex="-1"
 				aria-labelledby="drawer-swipe-label"
 			>
 				<div
-					className={`${
-						showWidget ? "visible" : "hidden"
-					} h-72 grid grid-cols-2 gap-4 p-4 lg:grid-cols-4 md:grid-cols-3 shadow-2xl`}
+					className={`grid grid-cols-2 gap-4 p-4 lg:grid-cols-4 md:grid-cols-3 shadow-2xl`}
 				>
 					{components.map((e, i) => (
 						// Card
 						<div
 							key={e.id}
-							className="p-4 rounded-lg shadow-lg cursor-pointer bg-opacity-75 bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700"
+							className="hover:scale-110 ease-in-out duration-150 p-4 rounded-lg shadow-lg cursor-pointer bg-opacity-75 bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700"
 							onClick={() => changeRandomColor(e)}
 						>
-							<div className="flex justify-center items-center p-2 mx-auto mb-2 max-w-[48px] bg-gray-200 dark:bg-gray-500 rounded-full w-18 h-18">
-								{["colore1", "colore2", "colore3"].map((e) => (
-									<span className="bg-red-200 rounded-full w-10 h-10 m-3 text-center">
-										{e}
-									</span>
-								))}
-							</div>
-							<div className="font-medium text-center text-gray-500 dark:text-gray-400">
+							<div className="text-gray-500 dark:text-gray-400">
 								{e.name.replace(new RegExp("_", "g"), " ")}
+							</div>
+							<div className="flex justify-around items-center p-0 mx-auto">
+								{["bg-red-400", "bg-blue-400", "bg-purple-400"].map((e) => (
+									<span
+										key={e}
+										className={`${e} w-10 h-10 rounded-full m-3 text-center inline-block hover:scale-150 ease-in-out duration-150`}
+									/>
+								))}
 							</div>
 						</div>
 					))}
 					{/* Varianti */}
-					{Array.from({ length: 4 }).map((_, i) => (
-						<div
-							key={`e59e351c-ae71-4c4f-80c0-2d30b5335d11-${i}`}
-							className="p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700"
-							onClick={() => changeRandomColor(e)}
-						>
-							<div className="flex justify-center items-center p-2 mx-auto mb-2 max-w-[48px] bg-gray-200 dark:bg-gray-500 rounded-full w-18 h-18">
-								<svg
-									className="inline w-8 h-8 text-gray-500 dark:text-gray-400"
-									aria-hidden="true"
-									fill="currentColor"
-									viewBox="0 0 20 20"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-									<path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-								</svg>
+					<div
+						className="flex justify-around items-center p-4 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700"
+						onClick={() => changeRandomColor(null)}
+					>
+						{Array.from({ length: 4 }).map((_, i) => (
+							<div
+								key={`e59e351c-ae71-4c4f-80c0-2d30b5335d11-${i}`}
+								className="hover:scale-110 ease-in-out duration-150"
+							>
+								<>
+									<svg
+										className="inline w-8 h-8 text-gray-500 dark:text-gray-400"
+										aria-hidden="true"
+										fill="currentColor"
+										viewBox="0 0 20 20"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+										<path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+									</svg>
+								</>
+								<div className=" text-center text-gray-500 dark:text-gray-400">
+									{`V. ${i + 1}`}
+								</div>
 							</div>
-							<div className="font-medium text-center text-gray-500 dark:text-gray-400">
-								{`Variante ${i + 1}`}
-							</div>
-						</div>
-					))}
+						))}
+					</div>
 				</div>
 			</div>
 		</>
