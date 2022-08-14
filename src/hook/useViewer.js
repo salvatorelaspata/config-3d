@@ -5,8 +5,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
 import { actions } from "../store/store";
 
-const WIDTH = window.innerWidth * 0.7;
-const HEIGHT = window.innerHeight * 0.7;
+const WIDTH = window.innerWidth * 0.9;
+const HEIGHT = window.innerHeight * 0.9;
 const ASPECT_RATIO = WIDTH / HEIGHT;
 
 let renderer = new THREE.WebGLRenderer();

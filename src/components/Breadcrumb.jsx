@@ -1,4 +1,5 @@
 import { Breadcrumb as B } from "flowbite-react";
+import React from "react";
 import { routing } from "../config/routing";
 
 export const Breadcrumb = ({ pathname }) => {
@@ -10,15 +11,16 @@ export const Breadcrumb = ({ pathname }) => {
 
 	return (
 		<B
-			aria-label="Default breadcrumb example"
+			aria-label="Breadcrumb"
 			className={`${pathname === "/configurator" ? "hidden" : "visible"}`}
+			tabIndex={0} // accessibility keyboard navigation
 		>
 			{routing.map(({ id, path, title, svgIcon }, i) => (
 				<B.Item
-					className={_calcolateVisibleBreadCrumb(i) ? "hidden" : "hidden"}
-					hidden={_calcolateVisibleBreadCrumb(i)}
+					className={`${_calcolateVisibleBreadCrumb(i) ? "hidden" : "visible"}`}
 					key={id}
 					href={path}
+					hidden={_calcolateVisibleBreadCrumb(i)}
 					icon={path === "/" && svgIcon}
 				>
 					{title}

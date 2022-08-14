@@ -1,6 +1,7 @@
 import { HomeIcon } from "../assets/HomeIcon";
 import { Catalog } from "../routes/Catalog";
 import { Configurator } from "../routes/Configurator";
+import { ConfiguratorRefactor } from "../routes/ConfiguratorRefactor";
 import { LandingPage } from "../routes/LandingPage";
 
 export const routing = [
@@ -24,6 +25,14 @@ export const routing = [
 		path: "/configurator",
 		page: <Configurator />,
 		title: "Configurator",
+		icon: "📚",
+	},
+	,
+	{
+		id: "e1d69cda-73f3-468b-9101-2416c4616012",
+		path: "/configuratorRefactor",
+		page: <ConfiguratorRefactor />,
+		title: "Configurator Material",
 		icon: "📚",
 	},
 ];
