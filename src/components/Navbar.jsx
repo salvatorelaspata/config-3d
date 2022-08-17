@@ -7,7 +7,7 @@ import { Breadcrumb } from "./Breadcrumb";
 export const Navbar = () => {
 	// manage selected menu item
 	const { pathname } = useLocation();
-	console.log(pathname);
+	// console.log(pathname);
 	return (
 		<>
 			<N fluid={true} rounded={true}>

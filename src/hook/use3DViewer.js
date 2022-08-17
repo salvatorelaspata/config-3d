@@ -1,108 +1,177 @@
+import { useEffect, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { actions } from "../store/store";
 import { generateTexture, loadObj, loadRGBE } from "./useLoader";
 
 const meshParams = {
+	color: 0xffffff,
+	transmission: 0,
+	opacity: 1,
+	metalness: 0.2,
+	roughness: 0,
+	ior: 1.5,
+	thickness: 0.01,
+	specularIntensity: 1,
+	specularColor: 0xffffff,
+	envMapIntensity: 1,
+	lightIntensity: 1,
 	exposure: 1,
 };
+
 const _WIDTH = window.innerWidth * 0.9;
 const _HEIGHT = window.innerHeight * 0.9;
 const _ASPECT_RATIO = _WIDTH / _HEIGHT;
 
-let camera, renderer, scene, mesh;
-
-const render = () => {
-	renderer.render(scene, camera);
-};
+let camera,
+	renderer,
+	scene,
+	controls,
+	sceneMeshes = [];
+const raycaster = new THREE.Raycaster();
 
 const _onWindowResize = () => {
-	const width = _WIDTH;
-	const height = _HEIGHT;
+	// console.log("_onWindowResize", _WIDTH, _HEIGHT);
+	const width = window.innerWidth * 0.9;
+	const height = window.innerHeight * 0.9;
 
 	camera.aspect = width / height;
 	camera.updateProjectionMatrix();
 
 	renderer.setSize(width, height);
 };
-// possibile parallelizzare 1 e 3
-// - promise.all prima però generare la texture (dipendenza di obj)
+// const _onClick = (event) => {
+// 	const mouse = {
+// 		x: (event.clientX / renderer.domElement.clientWidth) * 2 - 1,
+// 		y: -(event.clientY / renderer.domElement.clientHeight) * 2 + 1,
+// 	};
+// 	raycaster.setFromCamera(mouse, camera);
+// 	const intersects = raycaster.intersectObjects(sceneMeshes, false);
+// 	if (intersects.length > 0) {
+// 		console.log(sceneMeshes.length + " " + intersects.length);
+// 		console.log(intersects[0], intersects);
+// 	}
+// };
+
+// const _onMouseMove = (event) => {
+// 	const mouse = {
+// 		x: (event.clientX / renderer.domElement.clientWidth) * 2 - 1,
+// 		y: -(event.clientY / renderer.domElement.clientHeight) * 2 + 1,
+// 	};
+// 	console.log(mouse);
+// 	raycaster.setFromCamera(mouse, camera);
+// 	const intersects = raycaster.intersectObjects(sceneMeshes, false);
+// 	if (intersects.length > 0) {
+// 		console.log(sceneMeshes.length + " " + intersects.length);
+// 		console.log(intersects[0], intersects);
+// 	}
+// };
+
+export const applyRandomMesh = (obj, texture, hdrEquirect) => {
+	texture &&
+		obj.traverse(function (child) {
+			child.addEventListener("click", (a) => {
+				console.log("click");
+			});
+			if (child instanceof THREE.Mesh) {
+				// child.material.map = texture;
+				// child.material.needsUpdate = true;
+				const r = Math.round(255 * Math.random());
+				const g = Math.round(255 * Math.random());
+				const b = Math.round(255 * Math.random());
+				const randomColor = "rgb(" + r + ", " + g + ", " + b + ")";
+				child.material = new THREE.MeshPhysicalMaterial({
+					color: randomColor,
+					metalness: meshParams.metalness,
+					roughness: meshParams.roughness,
+					ior: meshParams.ior,
+					alphaMap: texture,
+					envMap: hdrEquirect,
+					envMapIntensity: meshParams.envMapIntensity,
+					transmission: meshParams.transmission, // use material.transmission for glass materials
+					specularIntensity: meshParams.specularIntensity,
+					specularColor: meshParams.specularColor,
+					opacity: meshParams.opacity,
+					side: THREE.DoubleSide,
+					transparent: true,
+				});
+				actions.addComponent(child);
+				sceneMeshes.push(child);
+			} else {
+				// console.log("Not managed", child);
+			}
+		});
+};
+
 export const use3DViewer = (mount) => {
-	(async () => {
-		console.log("1. load hdr");
-		const hdrEquirect = await loadRGBE(
-			"./models/textures/",
-			"pedestrian_overpass_1k.hdr"
+	const [texture, setTexture] = useState(generateTexture());
+	const [hdrEquirect, setHdrEquirect] = useState(generateTexture());
+	const [obj, setObj] = useState(generateTexture());
+	useEffect(() => {
+		// load hdr equirectangular texture for environment mapping
+		loadRGBE("./models/textures/", "pedestrian_overpass_1k.hdr").then(
+			(hdrEquirect) => {
+				setHdrEquirect(hdrEquirect);
+				// load object model .obj
+				loadObj("./models/obj/", "lego.obj").then((obj) => {
+					obj.position.set(0, -95, 0);
+					obj.rotation.set(0, 90, 0);
+					setObj(obj);
+					// apply random mesh color to object model
+					applyRandomMesh(obj, texture, hdrEquirect);
+					// create and configure renderer
+					renderer = new THREE.WebGLRenderer({ antialias: true });
+					renderer.setPixelRatio(window.devicePixelRatio);
+					renderer.setSize(_WIDTH, _HEIGHT);
+					renderer.shadowMap.enabled = true;
+					renderer.toneMapping = THREE.ACESFilmicToneMapping;
+					renderer.toneMappingExposure = meshParams.exposure;
+					renderer.outputEncoding = THREE.sRGBEncoding;
+					// mount renderer to dom
+					mount &&
+						mount.current &&
+						mount.current.appendChild(renderer.domElement);
+
+					// create scene
+					scene = new THREE.Scene();
+					// create camera
+					camera = new THREE.PerspectiveCamera(75, _ASPECT_RATIO, 0.1, 1000);
+					camera.position.set(140, 30, 0); // x, y, z
+					// set texture environment mapping
+					scene.background = hdrEquirect;
+					// add obj to scene
+					scene.add(obj);
+
+					// orbit controls
+					controls = new OrbitControls(camera, renderer.domElement);
+
+					// ANIMATE
+					const animate = () => {
+						requestAnimationFrame(animate);
+						if (obj) obj.rotation.y -= 0.006;
+						// required if controls.enableDamping or controls.autoRotate are set to true
+						controls.update();
+						renderer.render(scene, camera);
+					};
+
+					animate();
+
+					window.addEventListener("resize", _onWindowResize);
+					// renderer.domElement.addEventListener("click", _onClick, false);
+					// renderer.domElement.addEventListener(
+					// 	"mousemove",
+					// 	_onMouseMove,
+					// 	false
+					// );
+				});
+			}
 		);
-		console.log("hdrEquirect", hdrEquirect);
+		// console.log("hdrEquirect", hdrEquirect);
+	}, []);
 
-		// console.log("2. load texture");
-		// const texture = await loadTexture("./models/textures/", "uv_grid_opengl.jpg");
-		// console.log("texture", texture);
-
-		console.log("2. generate texture");
-		const texture = generateTexture();
-		console.log("texture", texture);
-
-		console.log("3. load obj");
-		const obj = await loadObj(
-			"./models/obj/",
-			"lego.obj",
-			texture,
-			hdrEquirect
-		);
-		console.log("obj", obj);
-
-		// console.log("4. load mesh");
-		// const mesh = createMesh(texture, hdrEquirect, obj);
-		// console.log("mesh", mesh);
-
-		console.log("5. create scene, camera, renderer");
-
-		renderer = new THREE.WebGLRenderer({ antialias: true });
-		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.setSize(_WIDTH, _HEIGHT);
-		renderer.shadowMap.enabled = true;
-
-		mount && mount.current && mount.current.appendChild(renderer.domElement);
-
-		renderer.toneMapping = THREE.ACESFilmicToneMapping;
-		renderer.toneMappingExposure = meshParams.exposure;
-
-		renderer.outputEncoding = THREE.sRGBEncoding;
-
-		scene = new THREE.Scene();
-
-		camera = new THREE.PerspectiveCamera(75, _ASPECT_RATIO, 0.1, 1000);
-		// x, y, z
-		camera.position.set(140, 30, 0);
-
-		scene.background = hdrEquirect;
-
-		obj.position.set(0, -95, 0);
-		obj.rotation.set(0, 90, 0);
-
-		scene.add(obj);
-		renderer.render(scene, camera);
-
-		// orbit controls
-		const controls = new OrbitControls(camera, renderer.domElement);
-
-		//ANIMATE
-		const animate = () => {
-			requestAnimationFrame(animate);
-			if (obj) obj.rotation.y -= 0.006;
-			// required if controls.enableDamping or controls.autoRotate are set to true
-			controls.update();
-			renderer.render(scene, camera);
-		};
-		animate();
-
-		// const controls = new OrbitControls(camera, renderer.domElement);
-		// controls.addEventListener("change", render); // use if there is no animation loop
-		// controls.minDistance = 10;
-		// controls.maxDistance = 150;
-
-		// window.addEventListener("resize", _onWindowResize);
-		//
-	})();
+	return {
+		obj,
+		texture,
+		hdrEquirect,
+	};
 };

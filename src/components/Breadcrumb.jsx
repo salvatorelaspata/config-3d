@@ -5,7 +5,7 @@ import { routing } from "../config/routing";
 export const Breadcrumb = ({ pathname }) => {
 	const _calcolateVisibleBreadCrumb = (currentI) => {
 		const i = routing.map((r) => r.path).indexOf(pathname);
-		console.log(currentI, i, currentI <= i);
+		// console.log(currentI, i, currentI <= i);
 		return currentI <= i;
 	};
 
