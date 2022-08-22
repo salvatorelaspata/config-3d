@@ -1,9 +1,11 @@
 import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
 const manager = new THREE.LoadingManager();
 const objLoader = new OBJLoader(manager);
+const fbxLoader = new FBXLoader();
 const textureLoader = new THREE.TextureLoader(manager);
 
 manager.onProgress = function (item, loaded, total) {
@@ -81,3 +83,22 @@ export const generateTexture = () => {
 	texture.repeat.set(1, 0);
 	return texture;
 };
+
+export const loadFBX = (path, fileName) =>
+	new Promise((resolve, reject) => {
+		fbxLoader.load(
+			`${path}${fileName}`,
+			function (fbx) {
+				resolve(fbx);
+			},
+			(xhr) => {
+				if (xhr.lengthComputable) {
+					const percentComplete = (xhr.loaded / xhr.total) * 100;
+					// console.log(Math.round(percentComplete) + "% downloaded");
+				}
+			},
+			(err) => {
+				reject(err);
+			}
+		);
+	});

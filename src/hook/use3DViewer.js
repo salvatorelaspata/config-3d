@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { actions } from "../store/store";
-import { generateTexture, loadObj, loadRGBE } from "./useLoader";
+import { generateTexture, loadFBX, loadObj, loadRGBE } from "./useLoader";
 
 const meshParams = {
 	color: 0xffffff,
@@ -28,7 +28,6 @@ let camera,
 	scene,
 	controls,
 	sceneMeshes = [];
-const raycaster = new THREE.Raycaster();
 
 const _onWindowResize = () => {
 	// console.log("_onWindowResize", _WIDTH, _HEIGHT);
@@ -40,6 +39,8 @@ const _onWindowResize = () => {
 
 	renderer.setSize(width, height);
 };
+
+// const raycaster = new THREE.Raycaster();
 // const _onClick = (event) => {
 // 	const mouse = {
 // 		x: (event.clientX / renderer.domElement.clientWidth) * 2 - 1,
@@ -52,7 +53,6 @@ const _onWindowResize = () => {
 // 		console.log(intersects[0], intersects);
 // 	}
 // };
-
 // const _onMouseMove = (event) => {
 // 	const mouse = {
 // 		x: (event.clientX / renderer.domElement.clientWidth) * 2 - 1,
@@ -106,19 +106,32 @@ export const applyRandomMesh = (obj, texture, hdrEquirect) => {
 export const use3DViewer = (mount) => {
 	const [texture, setTexture] = useState(generateTexture());
 	const [hdrEquirect, setHdrEquirect] = useState(generateTexture());
-	const [obj, setObj] = useState(generateTexture());
+	const [objs, setObjs] = useState([]);
+
 	useEffect(() => {
 		// load hdr equirectangular texture for environment mapping
 		loadRGBE("./models/textures/", "pedestrian_overpass_1k.hdr").then(
 			(hdrEquirect) => {
 				setHdrEquirect(hdrEquirect);
 				// load object model .obj
-				loadObj("./models/obj/", "lego.obj").then((obj) => {
-					obj.position.set(0, -95, 0);
+				Promise.all([
+					loadObj("./models/obj/", "lego.obj"),
+					loadFBX("./models/fbx/", "Fruttiera2.fbx"),
+					loadFBX("./models/fbx/", "Fruttiera.fbx"),
+				]).then(([obj, fbx, fbx2]) => {
+					// loadObj("./models/obj/", "lego.obj").then((obj) => {
+					// loadFBX("./models/fbx/", "Fruttiera2.fbx").then((obj) => {
+
+					obj.position.set(0, 0, 0);
+					fbx.position.set(50, 0, 0);
+					fbx2.position.set(100, 0, 0);
 					obj.rotation.set(0, 90, 0);
-					setObj(obj);
+					setObjs([obj, fbx, fbx2]);
 					// apply random mesh color to object model
 					applyRandomMesh(obj, texture, hdrEquirect);
+					applyRandomMesh(fbx, texture, hdrEquirect);
+					applyRandomMesh(fbx2, texture, hdrEquirect);
+					// applyDefaultMesh(obj);
 					// create and configure renderer
 					renderer = new THREE.WebGLRenderer({ antialias: true });
 					renderer.setPixelRatio(window.devicePixelRatio);
@@ -141,6 +154,8 @@ export const use3DViewer = (mount) => {
 					scene.background = hdrEquirect;
 					// add obj to scene
 					scene.add(obj);
+					scene.add(fbx);
+					scene.add(fbx2);
 
 					// orbit controls
 					controls = new OrbitControls(camera, renderer.domElement);
@@ -166,11 +181,12 @@ export const use3DViewer = (mount) => {
 				});
 			}
 		);
+
 		// console.log("hdrEquirect", hdrEquirect);
 	}, []);
 
 	return {
-		obj,
+		objs,
 		texture,
 		hdrEquirect,
 	};
