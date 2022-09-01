@@ -25,7 +25,7 @@ const _initialization = (onFinishedLoading) => {
 
 	const loader = new OBJLoader(manager);
 	loader.load(
-		"./models/obj/lego.obj",
+		"/models/obj/lego.obj",
 		function (obj) {
 			// object = obj;
 			onFinishedLoading(obj);
@@ -48,7 +48,7 @@ const _initialization = (onFinishedLoading) => {
 
 	// texture
 	const textureLoader = new THREE.TextureLoader(manager);
-	const texture = textureLoader.load("./models/textures/uv_grid_opengl.jpg");
+	const texture = textureLoader.load("/models/textures/uv_grid_opengl.jpg");
 
 	return [light, light2, texture];
 };

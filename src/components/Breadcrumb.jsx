@@ -15,17 +15,21 @@ export const Breadcrumb = ({ pathname }) => {
 			className={`${pathname === "/configurator" ? "hidden" : "visible"}`}
 			tabIndex={0} // accessibility keyboard navigation
 		>
-			{routing.map(({ id, path, title, svgIcon }, i) => (
-				<B.Item
-					className={`${_calcolateVisibleBreadCrumb(i) ? "hidden" : "visible"}`}
-					key={id}
-					href={path}
-					hidden={_calcolateVisibleBreadCrumb(i)}
-					icon={path === "/" && svgIcon}
-				>
-					{title}
-				</B.Item>
-			))}
+			{routing
+				.filter((r) => !r.hidden)
+				.map(({ id, path, title, svgIcon }, i) => (
+					<B.Item
+						className={`${
+							_calcolateVisibleBreadCrumb(i) ? "hidden" : "visible"
+						}`}
+						key={id}
+						href={path}
+						hidden={_calcolateVisibleBreadCrumb(i)}
+						icon={path === "/" && svgIcon}
+					>
+						{title}
+					</B.Item>
+				))}
 		</B>
 	);
 };

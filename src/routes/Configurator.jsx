@@ -1,11 +1,14 @@
 import { useRef } from "react";
+import { useParams } from "react-router-dom";
 import { Drawer } from "../components/Drawer";
-import Sidebar from "../components/Sidebar";
+// import Sidebar from "../components/Sidebar";
 import useViewer from "../hook/useViewer";
 import { useComponent } from "../store/store";
 
 export const Configurator = () => {
 	const mount = useRef(null);
+	let params = useParams();
+	console.log(params);
 	const [changeRandomColor] = useViewer(mount);
 	const components = useComponent();
 	return (

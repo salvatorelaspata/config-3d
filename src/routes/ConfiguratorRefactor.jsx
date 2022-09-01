@@ -1,10 +1,12 @@
 import { useRef } from "react";
+import { useParams } from "react-router-dom";
 import { applyRandomMesh, use3DViewer } from "../hook/use3DViewer";
 
 export const ConfiguratorRefactor = () => {
 	const mount = useRef(null);
-
-	const { objs, texture, hdrEquirect } = use3DViewer(mount);
+	let { objId } = useParams();
+	console.log(objId);
+	const { objs, texture, hdrEquirect } = use3DViewer(mount, objId);
 	return (
 		<div className="flex justify-center">
 			<div ref={mount} />

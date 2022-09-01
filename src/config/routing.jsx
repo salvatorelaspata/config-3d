@@ -12,6 +12,7 @@ export const routing = [
 		title: "Home",
 		icon: "🏠",
 		svgIcon: HomeIcon,
+		hidden: false,
 	},
 	{
 		id: "6c655319-c56a-4ce4-90d4-2491e32fbd61",
@@ -19,6 +20,7 @@ export const routing = [
 		page: <Catalog />,
 		title: "Catalog",
 		icon: "💡",
+		hidden: false,
 	},
 	{
 		id: "e1d69cda-73f3-468b-9101-2416c4616011",
@@ -26,13 +28,30 @@ export const routing = [
 		page: <Configurator />,
 		title: "Configurator",
 		icon: "📚",
+		hidden: false,
 	},
-	,
 	{
 		id: "e1d69cda-73f3-468b-9101-2416c4616012",
 		path: "/configuratorRefactor",
 		page: <ConfiguratorRefactor />,
 		title: "Configurator Material",
+		icon: "🤩",
+		hidden: false,
+	},
+	{
+		id: "e1d69cda-73f3-468b-9101-2416c4616011",
+		path: "/configurator/:objId",
+		page: <Configurator />,
+		title: "Configurator",
 		icon: "📚",
+		hidden: true,
+	},
+	{
+		id: "e1d69cda-73f3-468b-9101-2416c4616012",
+		path: "/configuratorRefactor/:objId",
+		page: <ConfiguratorRefactor />,
+		title: "Configurator Material",
+		icon: "🤩",
+		hidden: true,
 	},
 ];
