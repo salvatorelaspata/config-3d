@@ -128,8 +128,8 @@ export const use3DViewer = (mount, objId = "") => {
 							object?.fileName || "lego.obj"
 					  )
 					: loadFBX(
-							object?.path || "/models/obj/",
-							object?.fileName || "lego.obj"
+							object?.path || "/models/fbx/",
+							object?.fileName || "Fruttiera.fbx"
 					  ),
 			]).then(([obj /*, fbx, fbx2*/]) => {
 				// loadObj("./models/obj/", "lego.obj").then((obj) => {
@@ -166,6 +166,11 @@ export const use3DViewer = (mount, objId = "") => {
 				// set texture environment mapping
 				scene.background = hdrEquirect;
 				// add obj to scene
+				const boundingBox = new THREE.Box3().setFromObject(obj);
+				const minY = boundingBox.min.y;
+				const maxY = boundingBox.max.y;
+				const delta = (maxY - minY) / 2;
+				obj.position.y = -delta;
 				scene.add(obj);
 				// scene.add(fbx);
 				// scene.add(fbx2);

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const LandingPage = () => {
 	const [randomBgColorGradient, setRandomBgColorGradient] = useState([
 		"667eea",
 		"764ba2",
 	]);
+	const navigate = useNavigate();
 	useEffect(() => {
 		// setInterval(() => {
 		setRandomBgColorGradient([
@@ -30,7 +32,13 @@ export const LandingPage = () => {
 					<h3 className="font-mono text-2xl mb-8 text-gray-200">
 						Proprio come tu la desideri!
 					</h3>
-					<button className="font-mono bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider">
+					<button
+						onClick={() => {
+							console.log("ciaone");
+							navigate("/catalog");
+						}}
+						className="font-mono bg-white font-bold rounded-full py-4 px-8 shadow-lg uppercase tracking-wider"
+					>
 						Configura subito
 					</button>
 				</div>
@@ -57,11 +65,8 @@ export const LandingPage = () => {
 						<img src="hero.png" alt="CATALOGO 3D" />
 					</div>
 				</div>
-				<div className="flex items-center flex-wrap mb-20">
+				<div className="flex items-center flex-wrap mb-20 flex-row-reverse">
 					<div className="w-full md:w-1/2">
-						<img src="hero.png" alt="CONFIGURATORE" />
-					</div>
-					<div className="w-full md:w-1/2 pl-10">
 						<h4 className="font-mono text-3xl text-gray-800 font-bold mb-3">
 							CONFIGURATORE
 						</h4>
@@ -71,6 +76,9 @@ export const LandingPage = () => {
 							ti mette a disposizione un configuratore così da poter configurare
 							la tua testa di moro in modo semplice e veloce.
 						</p>
+					</div>
+					<div className="w-full md:w-1/2">
+						<img src="hero.png" alt="CONFIGURATORE" />
 					</div>
 				</div>
 				<div className="flex items-center flex-wrap mb-20">
@@ -99,7 +107,13 @@ export const LandingPage = () => {
 					<h3 className="font-mono my-4 text-2xl text-white">
 						Configura subito la tua testa di moro!
 					</h3>
-					<button className="font-mono bg-white font-bold rounded-full mt-6 py-4 px-8 shadow-lg uppercase tracking-wider">
+					<button
+						onClick={() => {
+							console.log("ciaone");
+							navigate("/catalog");
+						}}
+						className="font-mono bg-white font-bold rounded-full mt-6 py-4 px-8 shadow-lg uppercase tracking-wider"
+					>
 						Configura subito
 					</button>
 				</div>

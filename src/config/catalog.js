@@ -2,8 +2,8 @@ export const catalog = [
 	{
 		objId: "4a542f9c-b096-4877-b64b-c1735036c765",
 		showStars: false,
-		title: "Classic",
-		description: "",
+		title: "Simple model",
+		description: "Old configurator",
 		object: {
 			path: "/models/obj/",
 			fileName: "lego.obj",
@@ -13,14 +13,14 @@ export const catalog = [
 			path: "/models/textures/",
 			fileName: "pedestrian_overpass_1k.hdr",
 		},
-		image: "/origin.jpg",
+		image: "/catalog/Configurator.png",
 		link: `/configurator`,
 	},
 	{
 		objId: "7c7b8d1a-b7af-4c74-b1e3-a3202052d6f1",
 		showStars: true,
-		price: "999.99 €",
-		title: "Classic",
+		price: "non tanti €",
+		title: "Simple model",
 		description: "lucido",
 		object: {
 			path: "/models/obj/",
@@ -31,7 +31,7 @@ export const catalog = [
 			path: "/models/textures/",
 			fileName: "pedestrian_overpass_1k.hdr",
 		},
-		image: "/origin.jpg",
+		image: "/catalog/Lucido.png",
 		link: `/configuratorRefactor`,
 	},
 	{
@@ -47,7 +47,7 @@ export const catalog = [
 			path: "/models/textures/",
 			fileName: "pedestrian_overpass_1k.hdr",
 		},
-		image: "/origin.jpg",
+		image: "/catalog/Fruttiera tinta unica.png",
 		link: `/configuratorRefactor`,
 	},
 	{
@@ -63,7 +63,7 @@ export const catalog = [
 			path: "/models/textures/",
 			fileName: "pedestrian_overpass_1k.hdr",
 		},
-		image: "/origin.jpg",
+		image: "/catalog/Fruttiera colorata.png",
 		link: `/configuratorRefactor`,
 	},
 ];

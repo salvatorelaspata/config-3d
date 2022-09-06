@@ -12,7 +12,7 @@ export const Breadcrumb = ({ pathname }) => {
 	return (
 		<B
 			aria-label="Breadcrumb"
-			className={`${pathname === "/configurator" ? "hidden" : "visible"}`}
+			className={`${pathname !== "/" ? "hidden" : "visible"}`}
 			tabIndex={0} // accessibility keyboard navigation
 		>
 			{routing

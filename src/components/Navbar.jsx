@@ -1,11 +1,12 @@
 import { Button, Navbar as N } from "flowbite-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { routing } from "../config/routing";
 import { Breadcrumb } from "./Breadcrumb";
 
 export const Navbar = () => {
 	// manage selected menu item
 	const { pathname } = useLocation();
+	const navigate = useNavigate();
 	return (
 		<>
 			<N fluid={true} rounded={true}>
@@ -20,7 +21,11 @@ export const Navbar = () => {
 					</span>
 				</N.Brand>
 				<div className="flex md:order-2">
-					<Button outline={true} gradientDuoTone="pinkToOrange">
+					<Button
+						onClick={() => navigate("/catalog")}
+						outline={true}
+						gradientDuoTone="pinkToOrange"
+					>
 						Configura
 					</Button>
 					<N.Toggle />
