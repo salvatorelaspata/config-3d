@@ -10,6 +10,14 @@ export const Breadcrumb = ({ pathname }) => {
 	};
 
 	return (
+		<B>
+			<B.Item>Scatta le foto</B.Item>
+			<B.Item>Caricale</B.Item>
+			<B.Item>Visualizza Catalogo</B.Item>
+			<B.Item>Configura!</B.Item>
+		</B>
+	);
+	return (
 		<B
 			aria-label="Breadcrumb"
 			className={`${pathname !== "/" ? "hidden" : "visible"}`}

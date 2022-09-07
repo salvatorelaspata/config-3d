@@ -68,6 +68,28 @@ const _onWindowResize = () => {
 // 	}
 // };
 
+const managePosition = (obj, camera, controls) => {
+	const boundingBox = new THREE.Box3().setFromObject(obj);
+	console.log(boundingBox);
+	const {
+		min: { x: minX, y: minY, z: minZ },
+		max: { x: maxX, y: maxY, z: maxZ },
+	} = boundingBox;
+	const deltaX = (maxX - minX) / 2;
+	const deltaY = (maxY - minY) / 2;
+	const deltaZ = (maxZ - minZ) / 2;
+	console.log(deltaX, deltaY, deltaZ);
+	obj.position.set(0, -deltaY, 0);
+	camera.position.set(maxX + maxX * 3, 0, 0); // x, y, z
+	controls.target = new THREE.Vector3(0, 0, 0);
+	// camera.addEventListener("change", (o) => {
+	// 	console.log("[camera]  - position changed in object", o);
+	// });
+	// controls.addEventListener("change", (o) => {
+	// 	console.log("[controls] - position changed in object", o);
+	// });
+};
+
 export const applyRandomMesh = (obj, texture, hdrEquirect) => {
 	texture &&
 		obj.traverse(function (child) {
@@ -135,9 +157,6 @@ export const use3DViewer = (mount, objId = "") => {
 				// loadObj("./models/obj/", "lego.obj").then((obj) => {
 				// loadFBX("./models/fbx/", "Fruttiera2.fbx").then((obj) => {
 
-				obj.position.set(0, 0, 0);
-				// fbx.position.set(50, 0, 0);
-				// fbx2.position.set(100, 0, 0);
 				obj.rotation.set(0, 90, 0);
 				setObjs([obj /*, fbx, fbx2*/]);
 				// apply random mesh color to object model
@@ -160,23 +179,22 @@ export const use3DViewer = (mount, objId = "") => {
 
 				// create scene
 				scene = new THREE.Scene();
+
 				// create camera
 				camera = new THREE.PerspectiveCamera(75, _ASPECT_RATIO, 0.1, 1000);
-				camera.position.set(140, 30, 0); // x, y, z
 				// set texture environment mapping
 				scene.background = hdrEquirect;
 				// add obj to scene
-				const boundingBox = new THREE.Box3().setFromObject(obj);
-				const minY = boundingBox.min.y;
-				const maxY = boundingBox.max.y;
-				const delta = (maxY - minY) / 2;
-				obj.position.y = -delta;
+
 				scene.add(obj);
 				// scene.add(fbx);
 				// scene.add(fbx2);
 
 				// orbit controls
 				controls = new OrbitControls(camera, renderer.domElement);
+
+				// settings camera and objec position
+				managePosition(obj, camera, controls);
 
 				// ANIMATE
 				const animate = () => {

@@ -2,6 +2,7 @@ export const catalog = [
 	{
 		objId: "4a542f9c-b096-4877-b64b-c1735036c765",
 		showStars: false,
+		price: "pochi €",
 		title: "Simple model",
 		description: "Old configurator",
 		object: {
@@ -64,6 +65,38 @@ export const catalog = [
 			fileName: "pedestrian_overpass_1k.hdr",
 		},
 		image: "/catalog/Fruttiera colorata.png",
+		link: `/configuratorRefactor`,
+	},
+	{
+		objId: "eb9358de-e3a1-401f-903c-82eea7376499",
+		title: "Pigna",
+		description: "Unica tinta",
+		object: {
+			path: "/models/obj/",
+			fileName: "PignaVerde.obj",
+			type: "obj",
+		},
+		background: {
+			path: "/models/textures/",
+			fileName: "pedestrian_overpass_1k.hdr",
+		},
+		image: "/catalog/Pigna.png",
+		link: `/configuratorRefactor`,
+	},
+	{
+		objId: "4e16358b-e846-459b-a753-8932ec93bf70",
+		title: "Angioletto",
+		description: "",
+		object: {
+			path: "/models/obj/",
+			fileName: "Angioletto.obj",
+			type: "obj",
+		},
+		background: {
+			path: "/models/textures/",
+			fileName: "pedestrian_overpass_1k.hdr",
+		},
+		image: "/catalog/Angioletto.png",
 		link: `/configuratorRefactor`,
 	},
 ];
