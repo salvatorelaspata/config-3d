@@ -15,18 +15,21 @@ export const Navbar = () => {
 	return (
 		<>
 			<N fluid={true} rounded={true}>
-				<N.Brand href="#">
-					<img
-						src="/smartphone-camera-svgrepo-com.svg"
-						className="mr-3 h-6 sm:h-9"
-						alt={`${t("title")} logo`}
-					/>
-					<span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-						{t("title")}
-					</span>
+				<N.Brand onClick={() => navigate("/")}>
+					<div className="flex cursor-pointer">
+						<img
+							src="/smartphone-camera-svgrepo-com.svg"
+							className="mr-3 h-6 sm:h-9"
+							alt={`${t("title")} logo`}
+						/>
+						<span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
+							{t("title")}
+						</span>
+					</div>
 				</N.Brand>
 				<div className="flex md:order-2">
 					<ConfigureButton size="xl" />
+					<N.Toggle />
 				</div>
 				<N.Collapse>
 					{routing
