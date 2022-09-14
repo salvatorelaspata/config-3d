@@ -9,7 +9,8 @@ export const Configurator = () => {
 	const mount = useRef(null);
 	let params = useParams();
 	console.log(params);
-	const [changeRandomColor] = useViewer(mount);
+	let { objId } = useParams();
+	const [changeRandomColor] = useViewer(mount, objId);
 	const components = useComponent();
 	return (
 		<div className="flex flex-wrap sm:flex-nowrap md:flex-nowrap">

@@ -11,6 +11,7 @@ export const catalog = [
 			type: "obj",
 		},
 		background: {
+			// da rimuovere per /configurator
 			path: "/models/textures/",
 			fileName: "pedestrian_overpass_1k.hdr",
 		},
@@ -98,5 +99,54 @@ export const catalog = [
 		},
 		image: "/catalog/Angioletto.png",
 		link: `/configuratorRefactor`,
+	},
+	{
+		objId: "234d391b-fcb5-4cfc-a5b5-c0e5234ada3c",
+		title: "Pignata",
+		description: "Averna Design - rfbx",
+		object: {
+			path: "/models/fbx/",
+			fileName: "Pignata.fbx",
+			type: "fbx",
+		},
+		background: {
+			path: "/models/textures/",
+			fileName: "pedestrian_overpass_1k.hdr",
+		},
+		image: "/catalog/Pignata.png",
+		link: `/configuratorRefactor`,
+	},
+
+	{
+		objId: "234d391b-fcb5-4cfc-a5b5-c0e5234ada3a",
+		title: "Pignata",
+		description: "Averna Design - robj",
+		object: {
+			path: "/models/obj/",
+			fileName: "Pignata.obj",
+			type: "obj",
+		},
+		background: {
+			path: "/models/textures/",
+			fileName: "pedestrian_overpass_1k.hdr",
+		},
+		image: "/catalog/Pignata.png",
+		link: `/configuratorRefactor`,
+	},
+	{
+		objId: "234d391b-fcb5-4cfc-a5b5-c0e5234ada3b",
+		title: "Pignata",
+		description: "Averna Design - r",
+		object: {
+			path: "/models/obj/",
+			fileName: "Pignata.obj",
+			type: "obj",
+		},
+		background: {
+			path: "/models/textures/",
+			fileName: "pedestrian_overpass_1k.hdr",
+		},
+		image: "/catalog/Pignata.png",
+		link: `/configurator`,
 	},
 ];

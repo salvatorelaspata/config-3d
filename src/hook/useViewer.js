@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { Color } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js";
+import { catalog } from "../config/catalog";
 import { actions } from "../store/store";
 
 const WIDTH = window.innerWidth * 0.9;
@@ -16,16 +17,22 @@ const _updateSize = () => {
 	renderer && renderer.setPixelRatio(ASPECT_RATIO);
 };
 
-const _initialization = (onFinishedLoading) => {
+const _initialization = (onFinishedLoading, objId) => {
 	const manager = new THREE.LoadingManager();
 
 	manager.onProgress = function (item, loaded, total) {
 		console.log(item, loaded, total);
 	};
 
+	const c = catalog.find((c) => c.objId === objId) || {};
+	let { object } = c;
+	if (!object) {
+		object = { path: "/models/obj/", fileName: "lego.obj" };
+	}
 	const loader = new OBJLoader(manager);
 	loader.load(
-		"/models/obj/lego.obj",
+		object.path + object.fileName,
+		// "/models/obj/lego.obj",
 		function (obj) {
 			// object = obj;
 			onFinishedLoading(obj);
@@ -53,7 +60,7 @@ const _initialization = (onFinishedLoading) => {
 	return [light, light2, texture];
 };
 
-const useViewer = (mount) => {
+const useViewer = (mount, objId = "") => {
 	var texture = useRef();
 	var object = useRef();
 	const scene = useRef(new THREE.Scene());
@@ -90,7 +97,7 @@ const useViewer = (mount) => {
 			obj.rotation.set(0, 90, 0);
 			scene.current.add(obj);
 			object.current = obj;
-		});
+		}, objId);
 
 		scene.current.add(light);
 		scene.current.add(light2);
