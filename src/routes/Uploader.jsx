@@ -13,8 +13,6 @@ const myBucket = new AWS.S3({
 })
 
 export const Uploader = () => {
-  console.log('import.meta.env', import.meta.env)
-
   const [progress, setProgress] = useState(0)
   const [selectedFile, setSelectedFile] = useState(null)
 
