@@ -2,11 +2,11 @@ import { useState } from 'react'
 import AWS from 'aws-sdk'
 import { useEffect } from 'react'
 
-const S3_BUCKET = import.meta.env.VITE_AWS_BUCKET_NAME
+const S3_BUCKET = 'import.meta.env.VITE_AWS_BUCKET_NAME'
 
 AWS.config.update({
-  accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-  secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  accessKeyId: 'import.meta.env.VITE_AWS_ACCESS_KEY_ID',
+  secretAccessKey: 'import.meta.env.VITE_AWS_SECRET_ACCESS_KEY',
 })
 
 const myBucket = new AWS.S3({
