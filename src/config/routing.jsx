@@ -23,14 +23,14 @@ export const routing = [
     icon: '💡',
     hidden: false,
   },
-  // {
-  //   id: '60bf0f6d-8d6d-4521-a556-3290062fdd89',
-  //   path: '/uploader',
-  //   page: <Uploader />,
-  //   title: 'Uploader',
-  //   icon: '☁',
-  //   hidden: false,
-  // },
+  {
+    id: '60bf0f6d-8d6d-4521-a556-3290062fdd89',
+    path: '/uploader',
+    page: <Uploader />,
+    title: 'Uploader',
+    icon: '☁',
+    hidden: false,
+  },
 
   // {
   // 	id: "e1d69cda-73f3-468b-9101-2416c4616011",
